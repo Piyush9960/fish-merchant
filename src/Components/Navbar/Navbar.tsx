@@ -2,9 +2,16 @@ import React from "react";
 import "./NavbarStyle.css";
 import logo from "../../assets/images/fish1.png";
 import { Link } from "react-router-dom";
+import { useGlobalState } from '../../Store/MainState/state2';
+
 const Navbar = () => {
+
+ const value = useGlobalState('counter');
+  // const dispatch = useDispatch();
+  // const addToCart = useCallback(() => dispatch({ type: 'ADD_TO_CART' }), [dispatch]);
   return (
     <div>
+    
       <div className="navigation-wrap bg-light start-header start-style">
         <div className="container">
           <div className="row">
@@ -53,7 +60,8 @@ const Navbar = () => {
                         Services
                       </Link>
                       <div className="dropdown-menu">
-                        <Link to="" className="dropdown-item">
+                        <Link                                             
+                         to="" className="dropdown-item">
                           Action
                         </Link>
                         <Link to="" className="dropdown-item">
@@ -63,7 +71,7 @@ const Navbar = () => {
                     </li>
                     <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                       <Link to="" className="nav-link">
-                        Cart
+                        Cart ({value})
                       </Link>
                     </li>
                   </ul>

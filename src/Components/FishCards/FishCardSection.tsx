@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./FishCardsStyle.css";
 import { fishDataType } from "./FishData";
 import { Button, Modal } from "react-bootstrap";
 import OrderForm from "../OrderForm/OrderForm";
 import {Link} from 'react-router-dom';
+import { useDispatch } from '../../Store/MainState/state2';
+
 
 const FishCardSection = ({
   props,
-  AddToCartHandler,
 }: {
   props: fishDataType;
-  AddToCartHandler: (id: string, totalPrice: number) => void;
 }) => {
   const [inputQty, setInputQty] = useState(1);
   const [show, setShow] = useState(false);
+    const dispatch = useDispatch()
+    const addToCart = useCallback(() => dispatch({ type: "ADD_TO_CART" }), [dispatch])
+
 
   const [state, setState] = useState<{
     name: string;
@@ -22,6 +25,7 @@ const FishCardSection = ({
     name: "",
     mobNo: "",
   });
+
 
   const changeFormHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -39,11 +43,17 @@ const FishCardSection = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-//   const submitHandler = (event: React.FormEvent<HTMLInputElement> ) => {
-//     event.preventDefault();
-//     alert(`Thanks ${state.name}`);
-//     setShow(false);
-//   };
+  const formSubmitHandler = () => {
+    // event.preventDefault();
+    alert(`Thanks ${state.name}`);
+    setShow(false);
+  };
+
+  // const AddToCartHandler = (id: string, totalPrice: number) => {
+  //   console.log("id", id);
+  //   console.log("TotalPrice:", totalPrice);
+
+  // };
 
   return (
     <>
@@ -69,7 +79,7 @@ const FishCardSection = ({
           <Button variant="secondary" size="sm" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" size="sm" >
+          <Button variant="primary" size="sm" onClick={formSubmitHandler} >
             Submit
           </Button>
         </Modal.Footer>
@@ -119,9 +129,7 @@ const FishCardSection = ({
               Order Now
             </Button>
             <button
-              onClick={() =>
-                AddToCartHandler(props.id, +props.currentPrice * inputQty)
-              }
+              onClick={addToCart}
               className="btn btn-info btn-sm float-right"
             >
               Add To Cart

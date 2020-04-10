@@ -4,10 +4,6 @@ import FishCardSection from "./FishCardSection";
 import { FishData, fishDataType } from "./FishData";
 
 const FishCards = () => {
-  const AddToCartHandler = (id: string, totalPrice: number) => {
-    console.log("id", id);
-    console.log("TotalPrice:", totalPrice);
-  };
   return (
     <div>
       <section className="wrapper">
@@ -19,7 +15,6 @@ const FishCards = () => {
                   <FishCardSection
                     key={idx}
                     props={item}
-                    AddToCartHandler={AddToCartHandler}
                   />
                 ))}
               </div>
